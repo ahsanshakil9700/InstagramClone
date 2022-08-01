@@ -3,3 +3,4 @@ class ChangeUsernameToEmail < ActiveRecord::Migration[5.2]
     rename_column :accounts, :username, :email
   end
 end
+
