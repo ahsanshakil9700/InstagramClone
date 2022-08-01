@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img class="logo" src="assets/Logo.png" width="45">
+<!--    <img class="logo" src="assets/Logo.png" width="45">-->
+    <%= image_tag"Logo.png", width: 45, class: 'logo' %>
   </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,24 +16,24 @@
     </form>
     <ul class="navbar-nav">
       <li class="nav-item">
+          <%= link_to dashboard_path(current_account), class: 'nav-link' do %>
+            <%= image_tag "home.png", class: 'icons' %>
+          <% end %>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#">
-          <img class="icons" src="assets/home.png">
+          <%= image_tag "plus.png", class: "icons"%>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <img class="icons" src="assets/plus.png">
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <img class="icons" src="assets/user.png">
+          <%= image_tag "user.png", class: 'icons' %>
         </a>
 <!--        Sub menu-->
         <div class="sub-meu">
           <ul>
-            <li> <a href="#">Profile</a> </li>
-            <li> <a href="#">Settings</a> </li>
+            <li> <%=link_to "Profile", account_path(current_account) %>  </li>
+            <li> <%= link_to "Settings", edit_account_registration_path(current_account) %> </li>
             <li> <%=link_to "Log Out", destroy_account_session_path, method: :delete %> </li>
           </ul>
         </div>

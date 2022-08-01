@@ -39,8 +39,14 @@ html, body
   padding-left: 50px;
   width: auto;
   height: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
+.nav-item
+{
+  padding: 5px;
+}
 // sub menu
 
 .sub-meu
@@ -181,6 +187,8 @@ html, body
   .redirect-links
   {
 
+    text-decoration: none;
+
   }
 }
 
@@ -236,3 +244,53 @@ html, body
   margin-bottom:0;
 }
 
+
+// signup page
+.outer-box
+{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.inner-box
+{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.signup-form {
+  .box {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    padding: 10px 0;
+    margin: 0 0 10px;
+
+  }
+
+  .form-signup {
+    width: 350px;
+
+    form {
+      padding: 0 40px;
+
+      .btn-primary {
+        width: 100%;
+        line-height: 14px;
+        font-size: 14px;
+        font-weight: 600;
+
+      }
+
+      input {
+        border: 1px solid #efefef;
+      }
+
+      .form-group
+      {
+        padding: 2px;
+      }
+
+    }
+  }
+}
