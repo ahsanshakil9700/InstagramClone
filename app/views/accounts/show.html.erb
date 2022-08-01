@@ -1,2 +1,57 @@
-<h2> User Profile</h2>
 
+<div class="user-profile">
+  <div class="profile row">
+    <div class="col-md-4 avatar">
+      <div class="wrapper">
+        <%= image_tag "defaultpicture.png" %>
+      </div>
+    </div>
+
+    <div class="col-md-8 basic-info">
+      <div class="user-wrapper">
+        <h2 class="username"><%= current_account.username %></h2>
+        <a class="edit-profile" href=" <%= edit_account_path(current_account) %>" >
+          <button>Edit Profile</button>
+        </a>
+      </div>
+      <ul class="posts">
+        <li><span>12</span> posts</li>
+        <li><span>195</span> followers</li>
+        <li><span>345</span> following</li>
+      </ul>
+      <h2 class="name"><%= current_account.full_name %></h2>
+      <a class="website"><%= current_account.website %></a>
+    </div>
+  </div>
+</div>
+
+<div class="user-tabs">
+  <a class="tab active" href="">
+    <i class="fa fa-th"></i>
+    POSTS
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-tv"></i>
+    IGTV
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-bookmark"></i>
+    SAVED
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-tag"></i>
+    TAGGED
+  </a>
+</div>
+
+<div class="user-images">
+  <div class="wrapper">
+    <%= image_tag "Photo01.jpeg" %>
+  </div>
+  <div class="wrapper">
+    <%= image_tag "Photo02.jpg" %>
+  </div>
+  <div class="wrapper">
+    <%= image_tag "Photo03.jpg" %>
+  </div>
+</div>
