@@ -22,13 +22,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #
 
-  resources :accounts, only: [:show, :index]
+  resources :accounts, only: [:show, :index, :edit, :update]
 
   # dashboard
   get '/dashboard', to: 'accounts#index'
-
-
-
-
 
 end
