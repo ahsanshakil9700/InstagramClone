@@ -43,6 +43,9 @@ gem 'font-awesome-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+gem 'image_processing'
+gem 'aws-sdk-s3', require: false
+gem 'active_storage_validations'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

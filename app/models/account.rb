@@ -6,6 +6,6 @@ class Account < ApplicationRecord
 
   validates_uniqueness_of :username
 
-
+  has_many :posts, dependent: :destroy
 
 end
