@@ -3,7 +3,11 @@
   <div class="profile row">
     <div class="col-md-4 avatar">
       <div class="wrapper">
+        <% if current_account.avatar? %>
+          <%= image_tag current_account.avatar.url(:avatar), class: 'avatar' %>
+          <% else %>
         <%= image_tag "defaultpicture.png" %>
+        <% end %>
       </div>
     </div>
 

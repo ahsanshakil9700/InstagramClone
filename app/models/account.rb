@@ -8,4 +8,5 @@ class Account < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
+  mount_uploader :avatar, AvatarUploader
 end

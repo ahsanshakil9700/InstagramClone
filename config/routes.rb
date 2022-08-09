@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: 'accounts#index'
+  root to: 'posts#index'
 
   devise_for :accounts,
              path: '',
@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   #
 
   resources :accounts, only: [:show, :index, :edit, :update]
+
+  resources :posts, only: [:index, :destroy, :create, :edit, :update] do
+    resources :photos, only: [:create]
+  end
 
   # dashboard
   get '/dashboard', to: 'accounts#index'

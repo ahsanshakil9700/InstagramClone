@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_06_123225) do
+ActiveRecord::Schema.define(version: 2022_08_09_101607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2022_08_06_123225) do
     t.text "bio"
     t.integer "phone"
     t.string "gender"
+    t.string "avatar"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
@@ -59,12 +60,31 @@ ActiveRecord::Schema.define(version: 2022_08_06_123225) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "avatars", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "avatar"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_avatars_on_account_id"
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.string "image"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_photos_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "description"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_posts_on_account_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "photos", "posts"
 end

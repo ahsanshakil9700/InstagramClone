@@ -25,7 +25,7 @@ gem 'devise'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -44,8 +44,22 @@ gem 'font-awesome-rails'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'image_processing'
-gem 'aws-sdk-s3', require: false
 gem 'active_storage_validations'
+
+# Use carrierwave for image upload
+gem 'carrierwave'
+gem 'cloudinary'
+gem 'figaro'
+
+
+
+gem 'bootstrap', '~>5.2.0'
+
+gem 'jquery-rails'
+gem 'rails-ujs', '~> 0.1.0'
+gem 'bootstrap-sass'
+
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -79,11 +93,7 @@ group :test do
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
 
   #use bootstrap 5 for styling
-  gem 'bootstrap', '~>5.2.0'
 
-  gem 'jquery-rails'
-  gem 'rails-ujs', '~> 0.1.0'
-  gem 'bootstrap-sass'
 
 end
 

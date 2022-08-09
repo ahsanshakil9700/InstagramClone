@@ -1,12 +1,12 @@
 
-@import "bootstrap/scss/bootstrap.scss";
 
-@import "bootstrap/scss/carousel";
 
+@import "bootstrap";
 @import "font-awesome";
 
 @import "accounts";
 
+@import "posts";
 html, body
 {
   min-height: 100vh;
@@ -298,3 +298,4 @@ html, body
     }
   }
 }
+
