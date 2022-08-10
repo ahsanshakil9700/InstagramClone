@@ -4,6 +4,7 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
+    @posts = current_account.posts.order(created_at: :desc)
   end
 
   def edit

@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
     before_action :authenticate_account!
-    before_action :find_post, only: [:destroy, :edit, :update]
+    before_action :find_post, only: [:destroy, :edit, :update, :show]
     def index
-      @posts = Post.all.limit(100).includes(:photos, :account).order('created_at desc')
+      @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
       @post = Post.new
     end
 
@@ -55,6 +55,14 @@ class PostsController < ApplicationController
       redirect_to root_path
     end
 
+    def show
+      @photos = @post.photos
+      @likes = @post.likes.includes(:account)
+      @comment = Comment.new
+      @is_liked = @post.is_liked(current_account)
+    end
+
+    private
     def find_post
       @post = Post.find_by id: params[:id]
 

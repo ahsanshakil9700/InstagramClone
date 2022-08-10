@@ -24,11 +24,13 @@ Rails.application.routes.draw do
 
   resources :accounts, only: [:show, :index, :edit, :update]
 
-  resources :posts, only: [:index, :destroy, :create, :edit, :update] do
+  resources :posts, only: [:index, :destroy, :show, :create, :edit, :update] do
     resources :photos, only: [:create]
+    resources :likes, only: [:create, :destroy], shallow: true
+    resources :comments, only: [:index, :create, :destroy], shallow: true
   end
 
   # dashboard
-  get '/dashboard', to: 'accounts#index'
+  get '/dashboard', to: 'posts#index'
 
 end

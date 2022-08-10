@@ -23,6 +23,10 @@
       <%end %>
     </div>
 
+
+<!--    Photo view carousel, needs to be fixed-->
+
+    <%= link_to post_path(post) do %>
     <% if post.photos.size == 1 %>
       <%= image_tag post.photos.first.image.url(:standard) , class: "card-img-top" %>
       <% else %>
@@ -51,33 +55,63 @@
             <span class="sr-only">Next</span>
           </a>
       </div>
-
     <%end %>
+  <% end %>
+
+
+<!--    Likes and comments-->
 
     <div class="card-body">
-      <div class="row-actions">
-<!--        <a href="#" class="core-sprite love hide-text">Love</a>-->
-        <%= image_tag "heart.png", class: "core-sprite love hide-text" %>
-<!--        <a href="#" class="core-sprite comment hide-text">Comment</a>-->
-        <%= image_tag "chat.png", class: "core-sprite comment hide-text" %>
+      <div class="row actions">
+        <div id="like-icon-post-<%= post.id.to_s %>">
+          <%= render "like-icon", {is_liked: post.is_liked(current_account), post: post} %>
+        </div>
       </div>
-      <div><strong><%= pluralize(16, "like") %></strong></div>
+      <div id="like-text-post-<%= post.id.to_s %>">
+        <%= render "like-text", {likes: post.likes} %>
+      </div>
 
       <div>
         <span><strong><%= post.account.full_name %></strong></span>
-        <span><%=post.description %></span>
+        <span><%= post.description %></span>
       </div>
-      <div class="light-color post-time"><%= time_ago_in_words(post.created_at).upcase %> AGO</div>
+      <!-- load comments -->
+      <div id="comment-post-<%= post.id.to_s %>">
+        <%= render 'comment-list', {post: post} %>
+      </div>
+      <%= link_to time_ago_in_words(post.created_at).upcase + " AGO", post_path(post),  class: "light-color post-time no-text-decoration" %>
       <hr>
-      <div class="row actions">
-        <form action="#" class="w-100">
-          <div>
-            <textarea class="form-control comment-input border-0" placeholder="Add a comment..." rows="1"></textarea>
-          </div>
-        </form>
+      <div class="row actions" id="comment-form-post-<%= post.id.to_s %>">
+        <%= render 'comment-form', {post: post} %>
       </div>
     </div>
+    </div>
 
-  </div>
+<!--    <div class="card-body">-->
+<!--      <div class="row-actions">-->
+<!--        <a href="#" class="core-sprite love hide-text">Love</a>-->
+        <%#= image_tag "heart.png", class: "core-sprite love hide-text" %>
+<!--        <a href="#" class="core-sprite comment hide-text">Comment</a>-->
+
+<!--      </div>-->
+<!--      <div><strong><%#= pluralize(16, "like") %></strong></div>-->
+
+<!--      <div>-->
+<!--        <span><strong><%#= post.account.full_name %></strong></span>-->
+<!--        <span><%#=post.description %></span>-->
+<!--      </div>-->
+<!--      <div class="light-color post-time"><%#= time_ago_in_words(post.created_at).upcase %> AGO</div>-->
+      <%#=link_to time_ago_in_words(post.created_at).upcase + " AGO", post_path(post), class: "light-color post-time" %>
+<!--      <hr>-->
+<!--      <div class="row actions">-->
+<!--        <form action="#" class="w-100">-->
+<!--          <div>-->
+<!--            <textarea class="form-control comment-input border-0" placeholder="Add a comment..." rows="1"></textarea>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
 <% end %>
 </div>

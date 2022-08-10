@@ -5,6 +5,7 @@
 //posts create form
 
 
+
 //Posts create form
 
 .post-author-icon {
@@ -108,8 +109,9 @@
   }
 }
 
+
 .love {
-  //background-position: -325px -329px;
+  background-position: -325px -329px;
   height: 24px;
   width: 24px;
   margin-bottom: 10px;
@@ -123,7 +125,34 @@
 
 .comment {
   @extend .love;
-  //background-position: -258px -175px;
+  background-position: -258px -175px;
   margin-left: 8px;
 
+}
+
+
+.comment-list {
+  height: 400px;
+  overflow: auto;
+}
+
+.post-show-img {
+  background-color: #fafafa;
+  margin: -10px 0;
+}
+
+
+.post-show-img {
+  background-color: #fafafa;
+  margin: -10px 0;
+}
+
+
+.delete-comment {
+  width: 11px;
+  height: 11px;
+  float: right;
+  margin: 5px 0 0 10px;
+  text-decoration: none;
+  color: #666666;
 }
