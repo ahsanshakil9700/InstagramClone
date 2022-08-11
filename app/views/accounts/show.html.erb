@@ -16,15 +16,36 @@
         <h2 class="username"><%= @account.username %></h2>
 
         <% if @account == current_account %>
-        <a class="edit-profile" href=" <%= edit_account_path(current_account) %>" >
-          <button>Edit Profile</button>
-        </a>
-          <%end %>
+          <a class="edit-profile" href=" <%= edit_account_path(current_account) %>" >
+            <button>Edit Profile</button>
+          </a>
+        <% else %>
+            <% if current_account.following.include?(@account) %>
+                <%= button_to 'Unfollow', unfollow_user_path(@account), method: :delete, class: "btn btn-primary" %>
+            <% else %>
+                <% if current_account.sending.include?(@account) %>
+                    <%= button_to "Pending Request", remove_request_path(@account), class: "btn btn-primary" %>
+
+                <% else %>
+                      <% if @account.private? %>
+
+                          <%= form_tag request_user_path, method: :post %>
+                          <%= hidden_field_tag :account_id, current_account.id %>
+                          <%= hidden_field_tag :following_id, @account.id %>
+                          <%= submit_tag "Follow", class: "btn btn-primary" %>
+
+                      <% else %>
+                          <%= button_to "Follow", follow_user_path(@account), class: "btn btn-primary" %>
+
+                      <% end %>
+                <% end %>
+            <% end %>
+        <%end %>
       </div>
       <ul class="posts">
         <li><span> <%= @posts.count %> </span> posts</li>
-        <li><span>195</span> followers</li>
-        <li><span>345</span> following</li>
+        <li><span> <%= @account.followers.count %> </span> followers</li>
+        <li><span> <%= @account.following.count %></span> following</li>
       </ul>
       <h2 class="name"><%= @account.full_name %></h2>
       <a class="website"><%= @account.website %></a>
@@ -51,10 +72,54 @@
   </a>
 </div>
 
-<div class="user-images">
-  <% @posts.each do |post|%>
-    <div class="wrapper">
-      <%=image_tag post.photos.first.image.url(:standard) %>
+
+<% if @account.private? and @account != current_account %>
+
+    <% if current_account.following.include?(@account) %>
+
+
+    <div class="user-images">
+      <% @posts.each do |post|%>
+        <div class="wrapper">
+          <%=image_tag post.photos.first.image.url(:standard) %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
+
+    <% else %>
+
+        <% if current_account.sending.include?(@account) %>
+
+            <div class="private-account-msg text-center">
+              <br>
+              <br>
+              <strong><p> Account is private! </p></strong>
+            </div>
+        <% else %>
+            <div class="private-account-msg text-center">
+              <br>
+              <br>
+              <strong><p> Account is private! </p></strong>
+            </div>
+        <%end %>
+    <% end %>
+  <% else %>
+
+
+  <div class="user-images">
+    <% @posts.each do |post|%>
+      <div class="wrapper">
+        <%=image_tag post.photos.first.image.url(:standard) %>
+      </div>
+    <% end %>
+  </div>
+
+  <%end  %>
+
+<!--<div class="user-images">-->
+  <%# @posts.each do |post|%>
+<!--    <div class="wrapper">-->
+      <%#=image_tag post.photos.first.image.url(:standard) %>
+<!--    </div>-->
+  <%# end %>
+<!--</div>-->

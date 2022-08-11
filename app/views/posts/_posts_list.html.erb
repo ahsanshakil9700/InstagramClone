@@ -1,5 +1,6 @@
 
 <% @posts.each do |post| %>
+  <% if current_account.following.include?(post.account) or post.account == current_account %>
   <div class="card mt-3 post">
     <div class="card-header d-flex align-items-center">
       <%= link_to account_path(post.account), class: "no-text-decoration" do %>
@@ -113,5 +114,7 @@
 <!--    </div>-->
 
 <!--  </div>-->
+
+    <%end %>
 <% end %>
 </div>

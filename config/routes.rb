@@ -2,6 +2,17 @@ Rails.application.routes.draw do
 
   root to: 'posts#index'
 
+  post 'follow/account' => 'follows#follow_user', as: :follow_user
+  delete 'unfollow/account' => 'follows#unfollow_user', as: :unfollow_user
+  post 'request/account' => 'requests#create', as: :request_user
+  post 'remove-request/account' => 'requests#remove_follow_request', as: :remove_request
+  post 'search/account' => 'accounts#search', as: :search_user
+
+
+  resources :follows, only: [:create]
+
+  resources :requests
+
   devise_for :accounts,
              path: '',
              path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration' },

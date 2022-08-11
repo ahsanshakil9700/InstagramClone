@@ -1,13 +1,13 @@
 
 <div class="add-story-area">
   <% @stories_attached_user.each do |user| %>
-    <%# if user == current_account %>
-    <% if user.avatar? %>
-    <%= link_to image_tag(user.avatar.url(:avatar), class: "story-avatar"), story_path(user.id), class: "btn" %>
-      <%else %>
-      <%= link_to image_tag("defaultpicture.png", class: "story-avatar"), story_path(user.id), class: "btn" %>
-      <% end %>
-    <%# end %>
+    <% if current_account.following.include?(user) || user == current_account %>
+        <% if user.avatar? %>
+          <%= link_to image_tag(user.avatar.url(:avatar), class: "story-avatar"), story_path(user.id), class: "btn" %>
+        <%else %>
+          <%= link_to image_tag("defaultpicture.png", class: "story-avatar"), story_path(user.id), class: "btn" %>
+        <% end %>
+    <% end %>
   <% end %>
 </div>
 

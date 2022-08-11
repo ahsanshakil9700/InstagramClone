@@ -13,8 +13,10 @@ class PostsController < ApplicationController
       @post = current_account.posts.build(post_params)
       if @post.save
         if params[:images]
-          params[:images]&.each do |img|
-            @post.photos.create(image: img)
+          if params[:images].count < 11
+              params[:images]&.each do |img|
+              @post.photos.create(image: img)
+            end
           end
         end
 
