@@ -173,3 +173,21 @@
   }
 }
 
+// search
+
+.search-result-item {
+  padding: 15px;
+}
+
+.search-result-item:hover {
+  background-color: #fafafa;
+}
+
+.popover {
+  border-radius: 0;
+}
+
+.popover-body {
+  background: #fff;
+  padding: 0;
+}

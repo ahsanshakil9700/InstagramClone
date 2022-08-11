@@ -4,6 +4,8 @@ class PostsController < ApplicationController
     def index
       @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
       @post = Post.new
+      @stories_attached_user = Account.has_stories
+      @story = Story.new
     end
 
 

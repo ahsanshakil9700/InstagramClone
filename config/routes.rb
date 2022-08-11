@@ -30,7 +30,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :create, :destroy], shallow: true
   end
 
+  resources :stories, only: [:show, :create, :destroy] do
+    resource :photos, only: [:create]
+  end
+
+
   # dashboard
   get '/dashboard', to: 'posts#index'
+
 
 end

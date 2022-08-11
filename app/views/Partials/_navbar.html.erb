@@ -11,9 +11,10 @@
 
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="form-inline my-2 my-lg">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    </form>
+    <%= form_tag accounts_path, method: :get, class: "form-inline my-2 my-lg-0 ml-md-auto", id: "users-search", remote: true do %>
+      <%= text_field_tag :words, params[:words], class: "form-control mr-sm-2 text-center common-btn", placeholder: "Search", autocomplete: 'off'%>
+      <div id="users-result"></div>
+    <% end %>
     <ul class="navbar-nav">
       <li class="nav-item">
           <%= link_to root_path, class: 'nav-link' do %>

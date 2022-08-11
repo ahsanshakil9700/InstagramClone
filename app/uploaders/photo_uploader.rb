@@ -23,6 +23,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [1080, 1080, :center]
   end
 
+  version :story do
+    process :resize_to_fill => [480, 500, :center]
+  end
+
   version :thumbnail do
     resize_to_fit(100, 100)
   end

@@ -51,6 +51,7 @@ gem 'carrierwave'
 gem 'cloudinary'
 gem 'figaro'
 
+gem 'whenever'
 
 
 gem 'bootstrap', '~>5.2.0'

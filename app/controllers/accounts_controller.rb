@@ -2,9 +2,13 @@ class AccountsController < ApplicationController
 
   before_action :authenticate_account!
 
+  def index
+
+  end
+
   def show
     @account = Account.find(params[:id])
-    @posts = current_account.posts.order(created_at: :desc)
+    @posts = @account.posts.order(created_at: :desc)
   end
 
   def edit
