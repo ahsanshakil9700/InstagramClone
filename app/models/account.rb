@@ -28,4 +28,6 @@ class Account < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   scope :has_stories, -> {where ('EXISTS(SELECT * FROM stories WHERE account_id = accounts.id)')}
+
+
 end

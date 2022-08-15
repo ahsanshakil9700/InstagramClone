@@ -2,9 +2,7 @@ class AccountsController < ApplicationController
 
   before_action :authenticate_account!
 
-  def index
-
-  end
+  def index; end
 
   def show
     @account = Account.find(params[:id])
@@ -22,7 +20,7 @@ class AccountsController < ApplicationController
 
   def search
     @account = Account.search_like_any([:full_name], params[:search])
-    render template: 'accounts/search-results', locals: { account: @account }
+    render template: 'accounts/search-results', locals: { account: @account } # remove render
   end
   private
   def account_params

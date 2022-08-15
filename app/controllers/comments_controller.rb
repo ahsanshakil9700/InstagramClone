@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
       @post = @comment.post
-      respond_to :js
+      #respond_to :js
     else
       flash[:alert] = "Something Went Wrong"
     end
