@@ -23,7 +23,12 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = Uglifier.new(:harmony => true)
+
+  Sprockets.register_compressor 'application/javascript', :terser, Terser::Compressor
+  config.assets.js_compressor = :terser
+  Terser.new.compile(File.read("public/lib/leaflet-environmental-layers/dist/LeafletEnvironmentalLayers.js"))
+  Terser.new.compile(File.read("public/lib/leaflet-environmental-layers/lib/glify.js"))
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
