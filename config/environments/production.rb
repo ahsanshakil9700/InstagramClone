@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -27,10 +29,8 @@ Rails.application.configure do
 
   config.assets.configure do |env|
     env.js_compressor  = :uglifier # or :closure, :yui
-    env.css_compressor = :sass   # or :yui
+    env.css_compressor = :sass # or :yui
   end
-
-
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

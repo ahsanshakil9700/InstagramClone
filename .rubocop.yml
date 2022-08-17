@@ -11,6 +11,15 @@ AllCops:
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
+    - 'config/environments/production.rb'
+    - 'config/environments/development.rb'
+    - 'config/environments/test.rb'
+    - 'config/schedule.rb'
+    - 'test/test_helper.rb'
+    - 'config/puma.rb'
+    - 'app/models/**'
+    - 'app/helpers/posts_helper.rb'
+    - 'Gemfile'
 
 Layout/LineLength:
   Max: 120

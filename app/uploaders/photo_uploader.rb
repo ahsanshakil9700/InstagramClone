@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class PhotoUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  #include CarrierWave::MiniMagick
+  # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   # storage :file
-  #storage :fog
+  # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -13,18 +15,17 @@ class PhotoUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-
   include Cloudinary::CarrierWave
 
-  process :convert => 'png'
-  process :tags => ['post_picture']
+  process convert: 'png'
+  process tags: ['post_picture']
 
   version :standard do
-    process :resize_to_fill => [1080, 1080, :center]
+    process resize_to_fill: [1080, 1080, :center]
   end
 
   version :story do
-    process :resize_to_fill => [480, 500, :center]
+    process resize_to_fill: [480, 500, :center]
   end
 
   version :thumbnail do

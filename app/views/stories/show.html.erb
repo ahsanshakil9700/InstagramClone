@@ -4,12 +4,12 @@
     <div class="story-column">
       <div class="story-box">
         <div class="story-header">
-          <% if @user.avatar? %>
-          <%= image_tag(@user.avatar.url(:avatar), class: "thumbnail-avatar") %>
+          <% if @account.avatar? %>
+          <%= image_tag(@account.avatar.url(:avatar), class: "thumbnail-avatar") %>
             <%else %>
             <% image_tag"defaultpicture.png", class: "default-avatar" %>
             <%end %>
-          <%= link_to @user.full_name, account_path(@user.id), class: "btn story-username" %>
+          <%= link_to @account.full_name, account_path(@account.id), class: "btn story-username" %>
         </div>
         <% if @stories.count == 1 %>
           <% if @stories.first.account == current_account %>
@@ -23,7 +23,7 @@
           <a class="story-time"><%= time_ago_in_words(@stories.first.created_at).upcase + " AGO"%></a>
           <%= image_tag @stories.first.photos.first.image.url(:story) %>
         <% else %>
-          <div class="carousel slide" data-ride="carousel" id="carousel-story-<%= @user.id %>">
+          <div class="carousel slide" data-ride="carousel" id="carousel-story-<%= @account.id %>">
             <div class="carousel-inner">
               <% @stories.each do |story| %>
                 <% if story.account == current_account %>
@@ -45,11 +45,11 @@
               <% end %>
               </div>
 
-              <a class="carousel-control-prev" href="#carousel-story-<%= @user.id %>" role="button" data-slide="prev">
+              <a class="carousel-control-prev" href="#carousel-story-<%= @account.id %>" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
               </a>
-              <a class="carousel-control-next" href="#carousel-story-<%= @user.id %>" role="button" data-slide="next">
+              <a class="carousel-control-next" href="#carousel-story-<%= @account.id %>" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
               </a>

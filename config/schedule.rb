@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -23,6 +25,5 @@ set :environment, "development"
 set :output, 'log/cron.log'
 
 every 1.minute do
-
   rake 'story:Delete_all_stories_older_than_24_hours'
 end

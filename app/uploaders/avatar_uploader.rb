@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class AvatarUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
@@ -15,11 +17,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   include Cloudinary::CarrierWave
 
-  process :convert => 'png'
-  process :tags => ['avatar']
+  process convert: 'png'
+  process tags: ['avatar']
 
   version :standard do
-    process :resize_to_fill => [300, 300, :north]
+    process resize_to_fill: [300, 300, :north]
   end
 
   version :thumbnail do
@@ -29,7 +31,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   version :avatar do
     resize_to_fit(64, 64)
   end
-
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)

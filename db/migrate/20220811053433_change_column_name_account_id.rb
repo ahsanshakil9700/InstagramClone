@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeColumnNameAccountId < ActiveRecord::Migration[5.2]
   def change
     rename_column :follows, :user_id, :account_id

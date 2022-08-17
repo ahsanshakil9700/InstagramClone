@@ -1,81 +1,107 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
-    before_action :authenticate_account!
-    before_action :find_post, only: [:destroy, :edit, :update, :show]
-    def index
-      @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
-      @post = Post.new
-      @stories_attached_user = Account.has_stories
-      @story = Story.new
+  before_action :authenticate_account!
+  before_action :find_post, only: %i[destroy edit update show]
+  after_action :verify_authorized, only: %i[edit destroy]
+
+  def index
+    @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
+    @post = Post.new
+    @stories_attached_user = Account.has_stories
+    @story = Story.new
+  end
+
+  # def create
+  #   @post = current_account.posts.build(post_params)
+  #   if @post.save
+  #     if params[:images] && (params[:images].count < 11)
+  #       params[:images]&.each do |img|
+  #         @post.photos.create(image: img)
+  #       end
+  #     end
+  #     # redirect_to posts_path
+  #     flash[:notice] = 'Saved ...'
+  #   else
+  #     flash[:alert] = 'Something went wrong ...'
+  #     # redirect_to posts_path
+  #   end
+  #   redirect_to posts_path
+  # end
+
+  def create
+    @post = current_account.posts.build(post_params)
+    if params[:images] && params[:images].count < 11
+      save_photos
+    else
+      redirect_to posts_path
+      flash[:alert] = 'Please add images (at max 10)!'
     end
+  end
 
-
-    def create
-      @post = current_account.posts.build(post_params)
-      if @post.save
-        if params[:images]
-          if params[:images].count < 11
-              params[:images]&.each do |img|
-              @post.photos.create(image: img)
-            end
-          end
-        end
-
-        redirect_to posts_path
-        flash[:notice] = "Saved ..."
-      else
-        flash[:alert] = "Something went wrong ..."
-        redirect_to posts_path
-      end
+  def destroy
+    # if @post.account == current_account
+    authorize @post.account
+    if @post.destroy
+      flash[:notice] = 'Post Deletes successfully'
+    else
+      flash[:alert] = 'Something went wrong'
     end
+    # else
+    #   flash[:alert] = 'You need to sign in as the user of the post'
+    # end
+    redirect_to root_path
+  end
 
+  def edit
+    # @post = Post.find(params[:id]) if @post.account == current_account
+    # if @post.account == current_account
+    # end
+    authorize @post.account
+  end
 
+  def update
+    @post.update(description: params[:post][:description])
+    redirect_to root_path
+  end
 
-    def destroy
+  def show
+    @photos = @post.photos
+    @likes = @post.likes.includes(:account)
+    @comment = Comment.new
+    @is_liked = @post.is_liked(current_account)
+  end
 
-      if @post.account == current_account
-        if @post.destroy
-          flash[:notice] = "Post Deletes successfully"
-        else
-          flash[:alert] = "Something went wrong"
-        end
+  private
 
-      else
-        flash[:alert] = "You need to sign in as the user of the post"
-      end
+  def find_post
+    @post = Post.find_by id: params[:id]
+    return if @post
 
-      redirect_to root_path
+    flash[:danger] = 'Post Not Found'
+    redirect_to root_path
+  end
 
+  def post_params
+    params.require(:post).permit(:description)
+  end
+
+  def save_photos
+    if @post.save
+      save_photos_safely
+    else
+      (flash[:alert] = 'An unexpected error occurred!')
     end
+    redirect_to root_path
+  end
 
-    def edit
-      if @post.account == current_account
-        @post = Post.find(params[:id])
-      end
+  def save_photos_safely
+    params[:images]&.each do |img|
+      @post.photos.create(image: img)
     end
-
-    def update
-      @post = Post.find(params[:id])
-      @post.update(description: params[:post][:description])
-      redirect_to root_path
-    end
-
-    def show
-      @photos = @post.photos
-      @likes = @post.likes.includes(:account)
-      @comment = Comment.new
-      @is_liked = @post.is_liked(current_account)
-    end
-
-    private
-    def find_post
-      @post = Post.find_by id: params[:id]
-
-      return if @post
-      flash[:danger] = "Post Not Found"
-      redirect_to root_path
-    end
-
-    def post_params
-      params.require(:post).permit(:description)
-    end
+    (flash[:notice] = 'Saved!')
+  rescue StandardError
+    redirect_to root_path
+    (flash[:alert] = 'Please add an image')
+  end
 end

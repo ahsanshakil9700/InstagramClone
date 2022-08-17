@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class AddMoreColumnsToAccounts < ActiveRecord::Migration[5.2]
   def change
-    add_column :accounts, :website, :string
-    add_column :accounts, :bio, :text
-    add_column :accounts, :phone, :integer
-    add_column :accounts, :gender, :string
+    change_table :accounts, bulk: true do |t|
+      t.string :website
+      t.text :bio
+      t.integer :phone
+      t.string :gender
+    end
   end
 end

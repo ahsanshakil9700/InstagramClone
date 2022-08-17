@@ -5,7 +5,10 @@ ruby '2.7.6'
 # rubocop gem
 gem 'rubocop'
 gem 'rubocop-rails'
-#gem 'rubocop-rspec'
+# gem 'rubocop-rspec'
+
+# authorization
+gem 'pundit', '~> 2.2.0'
 
 gem 'sprockets-rails'
 
@@ -37,7 +40,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 #omniauth gem
-
 gem 'omniauth'
 
 # font awesome rails
@@ -92,10 +94,7 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
-
   #use bootstrap 5 for styling
-
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
