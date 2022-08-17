@@ -18,14 +18,12 @@
       <div class="card-header">
         Create Stories
       </div>
-      <div class="card-body">
-        <%= form_for @story, :html => {:multipart => true} do |f| %>
-          <%= file_field_tag "image", type: :file %>
-          <%= f.submit "Submit", class: "btn btn-primary" %>
-        <% end %>
-      </div>
+        <div class="card-body">
+          <%= form_for @story, :html => {:multipart => true} do |f| %>
+            <%= file_field_tag "image", type: :file %>
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+          <% end %>
+        </div>
     </div>
-
   </div>
-
 </div>

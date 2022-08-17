@@ -8,26 +8,9 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
     @post = Post.new
-    @stories_attached_user = Account.has_stories
+    @stories_attached_user = Account.where('EXISTS(SELECT * FROM stories WHERE account_id = accounts.id)')
     @story = Story.new
   end
-
-  # def create
-  #   @post = current_account.posts.build(post_params)
-  #   if @post.save
-  #     if params[:images] && (params[:images].count < 11)
-  #       params[:images]&.each do |img|
-  #         @post.photos.create(image: img)
-  #       end
-  #     end
-  #     # redirect_to posts_path
-  #     flash[:notice] = 'Saved ...'
-  #   else
-  #     flash[:alert] = 'Something went wrong ...'
-  #     # redirect_to posts_path
-  #   end
-  #   redirect_to posts_path
-  # end
 
   def create
     @post = current_account.posts.build(post_params)
@@ -40,23 +23,16 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    # if @post.account == current_account
     authorize @post.account
     if @post.destroy
       flash[:notice] = 'Post Deletes successfully'
     else
       flash[:alert] = 'Something went wrong'
     end
-    # else
-    #   flash[:alert] = 'You need to sign in as the user of the post'
-    # end
     redirect_to root_path
   end
 
   def edit
-    # @post = Post.find(params[:id]) if @post.account == current_account
-    # if @post.account == current_account
-    # end
     authorize @post.account
   end
 

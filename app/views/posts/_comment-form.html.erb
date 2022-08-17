@@ -3,5 +3,7 @@
   <%= f.hidden_field :account_id, value: current_account.id %>
   <%= f.hidden_field :post_id, value: post.id %>
   <%= f.text_field :content, class: "form-control comment-input border-0",
-                   placeholder: "Add a comment ...", autocomplete: :off %>
+                   placeholder: "Add a comment ...", autocomplete: :off,
+                   required: true, pattern: "^[^-\s][a-zA-Z0-9_\s-]+$",
+                   title: "First character can not be a space!"%>
 <% end %>

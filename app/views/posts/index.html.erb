@@ -13,18 +13,14 @@
           <br>
           <br>
           <%= file_field_tag "images[]", type: :file, multiple: true %>
-
           <%= f.submit "Post", class: "btn btn-primary" %>
         <% end %>
       </div>
     </div>
     <div id="posts">
-      <%# if current_account.following.include?(@post.account) || @post.account == current_account %>
         <%= render 'posts_list' %>
-      <%# end %>
     </div>
   </div>
-
 </div>
 
 

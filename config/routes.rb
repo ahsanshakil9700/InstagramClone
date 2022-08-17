@@ -2,20 +2,10 @@
 
 Rails.application.routes.draw do
   root to: 'posts#index'
-  post 'follow/account' => 'follows#follow_user', as: :follow_user
-  delete 'unfollow/account' => 'follows#unfollow_user', as: :unfollow_user
-  post 'request/account' => 'requests#create', as: :request_user
-  post 'remove-request/account' => 'requests#remove_follow_request', as: :remove_request
-  post 'search/account' => 'accounts#search', as: :search_user
-
-  resources :follows, only: [:create]
-
-  resources :requests
 
   devise_for :accounts,
              path: '',
-             path_names: { sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration' },
-             controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+             path_names: { sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration' }
 
   devise_scope :user do
     authenticated :accounts do
@@ -26,10 +16,15 @@ Rails.application.routes.draw do
       root 'devise/sessions#new', as: :unauthenticated_root
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  #
 
-  resources :accounts, only: %i[show index edit update]
+  # resource for accounts
+  resources :accounts, only: %i[show edit update] do
+    post :index
+  end
+  # resource for follows
+  resources :follows, only: %i[create destroy]
+  # resources :requests
+  resources :requests, only: %i[create index update destroy]
 
   resources :posts, only: %i[index destroy show create edit update] do
     resources :photos, only: [:create]
@@ -40,6 +35,9 @@ Rails.application.routes.draw do
   resources :stories, only: %i[show create destroy] do
     resource :photos, only: [:create]
   end
+
+  # Search function route
+  post 'search/account' => 'accounts#search', as: :search_user
 
   # dashboard
   get '/dashboard', to: 'posts#index'

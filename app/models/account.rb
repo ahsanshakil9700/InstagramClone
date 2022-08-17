@@ -29,8 +29,6 @@ class Account < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  scope :has_stories, -> { where ('EXISTS(SELECT * FROM stories WHERE account_id = accounts.id)') }
-
   validates :full_name, :email, presence: true, length: { maximum: 50 }
 
 end

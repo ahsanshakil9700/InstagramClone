@@ -1,92 +1,80 @@
 
 <% @posts.each do |post| %>
   <% if current_account.following.include?(post.account) or post.account == current_account %>
-  <div class="card mt-3 post">
-    <div class="card-header d-flex align-items-center">
-      <%= link_to account_path(post.account), class: "no-text-decoration" do %>
-        <% if post.account.avatar? %>
-          <%= image_tag post.account.avatar.url(:avatar), class: "post-author-icon" %>
-        <% else %>
-        <%= image_tag "defaultpicture.png", class: "post-author-icon" %>
+    <div class="card mt-3 post">
+      <div class="card-header d-flex align-items-center">
+        <%= link_to account_path(post.account), class: "no-text-decoration" do %>
+          <% if post.account.avatar? %>
+            <%= image_tag post.account.avatar.url(:avatar), class: "post-author-icon" %>
+          <% else %>
+            <%= image_tag "defaultpicture.png", class: "post-author-icon" %>
           <%end %>
-      <% end %>
-      <%= link_to account_path(post.account), class: "normal-color no-text-decoration",
-                  title: post.account.full_name do %>
-        <strong><%= post.account.full_name %></strong>
-      <% end %>
-      <% if post.belongs_to? current_account %>
-        <%= link_to post_path(post), method:  :delete, class: "ml-auto delete-post-icon mx-auto" do %>
-          <i class="fa fa-trash" aria-hidden="true"></i>
         <% end %>
-        <%= link_to edit_post_path(post), class: "ml-auto delete-post-icon mx-auto" do %>
-        <i class="fa fa-edit" aria-hidden="true"></i>
+        <%= link_to account_path(post.account), class: "normal-color no-text-decoration",
+                    title: post.account.full_name do %>
+          <strong><%= post.account.full_name %></strong>
+        <% end %>
+        <% if post.belongs_to? current_account %>
+          <%= link_to post_path(post), method:  :delete, class: "ml-auto delete-post-icon mx-auto" do %>
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          <% end %>
+          <%= link_to edit_post_path(post), class: "ml-auto delete-post-icon mx-auto" do %>
+            <i class="fa fa-edit" aria-hidden="true"></i>
+          <%end %>
         <%end %>
-      <%end %>
-    </div>
-
-
-<!--    Photo view carousel, needs to be fixed-->
-
-    <%= link_to post_path(post) do %>
-    <% if post.photos.size == 1 %>
-      <%= image_tag post.photos.first.image.url(:standard) , class: "card-img-top" %>
-      <% else %>
-      <div class="carousel slide" data-ride="carousel" id="carousel-post-<%= post.id %>">
-        <div class="carousel-inner">
-          <% post.photos.each do |photo| %>
-            <% if photo == post.photos.first %>
-              <div class="carousel-item active">
+      </div>
+      <%= link_to post_path(post) do %>
+        <% if post.photos.size == 1 %>
+          <%= image_tag post.photos.first.image.url(:standard) , class: "card-img-top" %>
+        <% else %>
+          <div class="carousel slide" data-ride="carousel" id="carousel-post-<%= post.id %>">
+            <div class="carousel-inner">
+              <% post.photos.each do |photo| %>
+                <% if photo == post.photos.first %>
+                  <div class="carousel-item active">
                 <%else %>
-              <div class="carousel-item">
-
-            <%end %>
-
-              <%= image_tag photo.image.url(:standard), class: "card-img-top" %>
-              </div>
-            <% end %>
+                  <div class="carousel-item">
+                <%end %>
+                <%= image_tag photo.image.url(:standard), class: "card-img-top" %>
+                  </div>
+                <% end %>
+            </div>
+            <a class="carousel-control-prev" href="#carousel-post-<%= post.id %>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-post-<%= post.id %> " role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        <%end %>
+      <% end %>
+      <div class="card-body">
+        <div class="row actions">
+          <div id="like-icon-post-<%= post.id.to_s %>">
+            <%= render "like-icon", {is_liked: post.is_liked(current_account), post: post} %>
+          </div>
         </div>
-
-          <a class="carousel-control-prev" href="#carousel-post-<%= post.id %>" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-
-          <a class="carousel-control-next" href="#carousel-post-<%= post.id %> " role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-      </div>
-    <%end %>
-  <% end %>
-
-
-<!--    Likes and comments-->
-
-    <div class="card-body">
-      <div class="row actions">
-        <div id="like-icon-post-<%= post.id.to_s %>">
-          <%= render "like-icon", {is_liked: post.is_liked(current_account), post: post} %>
+        <div id="like-text-post-<%= post.id.to_s %>">
+          <%= render "like-text", {likes: post.likes} %>
         </div>
-      </div>
-      <div id="like-text-post-<%= post.id.to_s %>">
-        <%= render "like-text", {likes: post.likes} %>
-      </div>
-
-      <div>
-        <span><strong><%= post.account.full_name %></strong></span>
-        <span><%= post.description %></span>
-      </div>
+        <div>
+          <span><strong><%= post.account.full_name %></strong></span>
+          <span><%= post.description %></span>
+        </div>
       <!-- load comments -->
-      <div id="comment-post-<%= post.id.to_s %>">
-        <%= render 'comment-list', {post: post} %>
-      </div>
-      <%= link_to time_ago_in_words(post.created_at).upcase + " AGO", post_path(post),  class: "light-color post-time no-text-decoration" %>
-      <hr>
-      <div class="row actions" id="comment-form-post-<%= post.id.to_s %>">
-        <%= render 'comment-form', {post: post} %>
+        <div id="comment-post-<%= post.id.to_s %>">
+          <%= render 'comment-list', {post: post} %>
+        </div>
+        <%= link_to time_ago_in_words(post.created_at).upcase + " AGO", post_path(post),
+                    class: "light-color post-time no-text-decoration" %>
+        <hr>
+        <div class="row actions" id="comment-form-post-<%= post.id.to_s %>">
+          <%= render 'comment-form', {post: post} %>
+        </div>
       </div>
     </div>
-    </div>
-    <%end %>
+  <%end %>
 <% end %>
 </div>

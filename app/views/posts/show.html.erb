@@ -4,54 +4,52 @@
       <div class="align-self-center">
         <%= render "photos", {post: @post} %>
       </div>
-        <div class="col-lg-4 col-md-5 mt-sm-4 mt-md-0">
-          <div class="row px-3 d-flex align-items-center">
-                <%= link_to account_path(@post.account), class: "no-text-decoration" do %>
-                  <%= image_tag @post.account.avatar.url(:avatar), class: "post-author-icon" %>
-                <% end %>
-                <%= link_to account_path(@post.account), class: "normal-color no-text-decoration d-flex align-self-center",
-                        title: @post.account.full_name do %>
-                        <strong><%= @post.account.full_name %></strong>
-                <% end %>
-                <% if @post.belongs_to? current_account %>
-                    <%= link_to post_path(@post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto" do %>
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                    <% end %>
-              <%= link_to edit_post_path(@post), class: "ml-auto delete-post-icon mx-auto" do %>
-                <i class="fa fa-edit" aria-hidden="true"></i>
-              <%end %>
-                <% end %>
+      <div class="col-lg-4 col-md-5 mt-sm-4 mt-md-0">
+        <div class="row px-3 d-flex align-items-center">
+          <%= link_to account_path(@post.account), class: "no-text-decoration" do %>
+            <%= image_tag @post.account.avatar.url(:avatar), class: "post-author-icon" %>
+          <% end %>
+          <%= link_to account_path(@post.account), class: "normal-color no-text-decoration d-flex align-self-center",
+            title: @post.account.full_name do %>
+            <strong><%= @post.account.full_name %></strong>
+          <% end %>
+          <% if @post.belongs_to? current_account %>
+            <%= link_to post_path(@post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto" do %>
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            <% end %>
+            <%= link_to edit_post_path(@post), class: "ml-auto delete-post-icon mx-auto" do %>
+              <i class="fa fa-edit" aria-hidden="true"></i>
+            <%end %>
+          <% end %>
+        </div>
+        <hr class="mb-0">
+        <div class="comment-list py-2">
+          <% if @post.description.present? %>
+            <div>
+              <span><strong><%= @post.account.full_name %></strong></span>
+              <span><%= @post.description %></span>
             </div>
-                <hr class="mb-0">
-                <div class="comment-list py-2">
-                  <% if @post.description.present? %>
-                    <div>
-                      <span><strong><%= @post.account.full_name %></strong></span>
-                      <span><%= @post.description %></span>
-                    </div>
-                    <% end %>
-                  <!-- load comment -->
-                    <div id="comment-post-<%= @post.id.to_s %>">
-                      <%= render 'comment-list', post: @post %>
-                    </div>
-                    </div>
-                      <hr class="mt-0">
-                      <div class="row-action">
-                        <%#= image_tag "heart.png", class: "core-sprite love hide-text" %>
-                        <div id="like-icon-post-<%= @post.id.to_s %>">
-                          <%= render "like-icon", {is_liked: @is_liked, post: @post} %>
-                        </div>
-                      </div>
-                  <div id="like-text-post-<%= @post.id.to_s %>">
-                    <%= render "like-text", {likes: @likes} %>
-                  </div>
-                        <div class="light-color post-time"><%= time_ago_in_words(@post.created_at).upcase %> AGO</div>
-                        <hr>
-                          <div class="row actions" id="comment-form-post-<%= @post.id.to_s %>">
-                            <%= render 'comment-form', post: @post %>
-                          </div>
-                        </div>
-
+          <% end %>
+          <!-- load comment -->
+          <div id="comment-post-<%= @post.id.to_s %>">
+            <%= render 'comment-list', post: @post %>
+          </div>
+        </div>
+        <hr class="mt-0">
+        <div class="row-action">
+          <div id="like-icon-post-<%= @post.id.to_s %>">
+            <%= render "like-icon", {is_liked: @is_liked, post: @post} %>
+          </div>
+        </div>
+        <div id="like-text-post-<%= @post.id.to_s %>">
+          <%= render "like-text", {likes: @likes} %>
+        </div>
+        <div class="light-color post-time"><%= time_ago_in_words(@post.created_at).upcase %> AGO</div>
+        <hr>
+          <div class="row actions" id="comment-form-post-<%= @post.id.to_s %>">
+            <%= render 'comment-form', post: @post %>
+          </div>
       </div>
     </div>
   </div>
+</div>
