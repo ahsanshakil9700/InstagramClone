@@ -30,7 +30,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the s3 file system (see config/storage.yml for options)
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
