@@ -3,7 +3,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_account!
   before_action :find_post, only: %i[destroy edit update show]
-  after_action :verify_authorized, only: %i[edit destroy]
+  after_action :verify_authorized, only: %i[edit destroy create update]
 
   def index
     @posts = Post.all.limit(100).includes(:photos, :account, :likes).order('created_at desc')
@@ -14,6 +14,7 @@ class PostsController < ApplicationController
 
   def create
     @post = current_account.posts.build(post_params)
+    authorize @post
     if params[:images] && params[:images].count < 11
       save_photos
     else
@@ -23,7 +24,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    authorize @post.account
+    authorize @post
     if @post.destroy
       flash[:notice] = 'Post Deletes successfully'
     else
@@ -33,10 +34,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    authorize @post.account
+    authorize @post
   end
 
   def update
+    authorize @post
     @post.update(description: params[:post][:description])
     redirect_to root_path
   end
@@ -54,8 +56,7 @@ class PostsController < ApplicationController
     @post = Post.find_by id: params[:id]
     return if @post
 
-    flash[:danger] = 'Post Not Found'
-    redirect_to root_path
+    raise ActiveRecord::RecordNotFound
   end
 
   def post_params

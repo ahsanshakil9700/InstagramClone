@@ -3,6 +3,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_account!
   before_action :find_comments, only: [:destroy]
+  after_action :verify_authorized, only: %i[destroy create]
 
   def index
     @comments = @post.comments.includes(:account)
@@ -10,24 +11,14 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(comment_params)
+    authorize @comment
     @post = @comment.post if @comment.save
-    # if @comment.save
-    #   @post = @comment.post
-    #   # respond_to :js
-    # else
-    #   flash[:alert] = 'Something Went Wrong'
-    # end
   end
 
   def destroy
-    # @comment = Comment.find(params[:id])
+    authorize @comment
     @post = @comment.post
     @comment.destroy
-    # if @comment.destroy
-    #   respond_to :js
-    # else
-    #   flash[:alert] = 'Something Went Wrong'
-    # end
   end
 
   private

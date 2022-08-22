@@ -9,8 +9,14 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
 
   protected
+
+  def handle_record_not_found
+    flash[:notice] = "Record not found!"
+    redirect_to root_path
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:full_name, :email, :password, :username) }
@@ -22,7 +28,9 @@ class ApplicationController < ActionController::Base
 
   def find_account
     @account = Account.find_by id: params[:id]
-    render 'accounts/Account_Not_Found' if @account.blank?
+    return if @account
+
+    raise ActiveRecord::RecordNotFound
   end
 
   def pundit_user
@@ -31,6 +39,6 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = 'Not authorized to perform this action! Induced by Pundit Authorization'
-    redirect_to edit_account_path(current_account)
+    redirect_to root_path
   end
 end

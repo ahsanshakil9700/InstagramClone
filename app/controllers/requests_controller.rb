@@ -19,8 +19,7 @@ class RequestsController < ApplicationController
   end
 
   def update
-    @request.update(is_accepted: params[:is_accepted])
-    if @request.is_accepted
+    if @request.update(is_accepted: params[:is_accepted])
       create_follow(@request.sender, @request.following_id)
       (flash[:notice] = 'Request accepted!')
     else
@@ -31,7 +30,6 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-    # user_id = params[:format]
     user_id = params[:id]
     request_id = Request.find_by(account_id: current_account.id, following_id: user_id)
     if current_account.requests.delete(request_id)

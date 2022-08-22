@@ -26,8 +26,7 @@ class AccountsController < ApplicationController
   private
 
   def find_account
-    @account = Account.find_by id: params[:id]
-    render 'accounts/Account_Not_Found' if @account.blank?
+    @account = Account.find params[:id]
   end
 
   def account_params

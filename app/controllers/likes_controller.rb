@@ -3,27 +3,19 @@
 class LikesController < ApplicationController
   before_action :authenticate_account!
   before_action :find_likes, only: [:destroy]
+  after_action :verify_authorized, only: %i[destroy create]
 
   def create
     @like = current_account.likes.build(likes_params)
     @post = @like.post
+    authorize @like
     @like.save
-    # if @like.save
-    #   respond_to :js
-    # else
-    #   flash[:alert] = 'Something went wrong'
-    # end
   end
 
   def destroy
-    # @like = Like.find(params[:id])
+    authorize @like
     @post = @like.post
     @like.destroy
-    # if @like.destroy
-    #   respond_to :js
-    # else
-    #   flash[:alert] = 'Something Went Wrong'
-    # end
   end
 
   private

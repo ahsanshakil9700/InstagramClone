@@ -11,8 +11,6 @@ class AddValidationsToDatabase < ActiveRecord::Migration[5.2]
 
     change_column_null :likes, :post_id, false
     change_column_null :likes, :account_id, false
-
-
     change_column_null :photos, :image, false
 
     change_column_null :posts, :account_id, false

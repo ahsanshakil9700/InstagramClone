@@ -3,14 +3,14 @@
 class StoriesController < ApplicationController
   before_action :authenticate_account!
   before_action :find_account, only: [:show]
-  before_action :find_story, only: [:destroy]
-  after_action :verify_authorized, only: [:destroy]
+  before_action :find_story, only: %i[destroy]
+  after_action :verify_authorized, only: %i[destroy create]
 
   def create
     @story = current_account.stories.build
+    authorize @story
     if params[:image]
       save_story
-
     else
       flash[:alert] = 'Unable to create story'
       redirect_to root_path
@@ -18,14 +18,12 @@ class StoriesController < ApplicationController
   end
 
   def show
-    # @user = Account.find(params[:id])
-    # redirect_to root_path unless @user == current_account
     @stories = @account.stories
     @oldest_story = @stories.order('created_at asc').first
   end
 
   def destroy
-    authorize @story.account
+    authorize @story
     flash[:alert] = if @story.destroy
                       'Story Deleted'
                     else
@@ -48,5 +46,8 @@ class StoriesController < ApplicationController
 
   def find_story
     @story = Story.find_by id: params[:id]
+    return if @story
+
+    raise ActiveRecord::RecordNotFound
   end
 end

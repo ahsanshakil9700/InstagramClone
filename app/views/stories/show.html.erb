@@ -12,7 +12,7 @@
           <%= link_to @account.full_name, account_path(@account.id), class: "btn story-username" %>
         </div>
         <% if @stories.count == 1 %>
-          <% if @stories.first.account == current_account %>
+          <% if policy(@stories.first).destroy? %>
             <div class="delete-story">
               <%= link_to story_path(@stories.first), data: { confirm: "Delete this story?" },
                           method: :delete, class:"story-btn" do %>
