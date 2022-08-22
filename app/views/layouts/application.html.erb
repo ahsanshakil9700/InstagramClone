@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>InstagramClone</title>
+    <title>Instagram Clone</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        $( document ).ready(function(){
+            $('#mycarousel').carousel();
+        });
+    </script>
+
+
+
   </head>
 
   <body>
-    <%= yield %>
+
+
+    <%= render 'Partials/navbar' if current_account  %>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <%= render 'Partials/footer' %>
   </body>
 </html>

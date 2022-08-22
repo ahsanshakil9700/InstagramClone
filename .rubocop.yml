@@ -1,0 +1,40 @@
+require:
+  - rubocop-rails
+
+
+AllCops:
+  # Exclude auto-generated files by Rails
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.2
+  Exclude:
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'vendor/bundle/**/*'
+    - 'bin/**/*'
+    - 'config/environments/production.rb'
+    - 'config/environments/development.rb'
+    - 'config/environments/test.rb'
+    - 'config/schedule.rb'
+    - 'test/test_helper.rb'
+    - 'config/puma.rb'
+    - 'app/models/**'
+    - 'app/helpers/posts_helper.rb'
+    - 'Gemfile'
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 23
+
+Metrics/BlockLength:
+  Exclude:
+    - config/**/*
+    - spec/**/*
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false

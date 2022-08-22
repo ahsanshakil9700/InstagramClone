@@ -1,0 +1,305 @@
+
+
+
+@import "bootstrap";
+@import "font-awesome";
+
+@import "accounts";
+
+@import "posts";
+
+@import "stories";
+
+@import "requests";
+html, body
+{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// navbar
+
+.navbar
+{
+  border-bottom: 0.5px solid lightgray;
+}
+.navbar-brand
+{
+  margin-left: 300px;
+}
+
+.navbar-nav {
+  margin-left: 300px;
+}
+
+.logo{
+
+  height: 60px;
+  width: 140px;
+}
+
+.form-inline {
+  margin-left: 300px;
+}
+
+.icons {
+  padding-left: 50px;
+  width: auto;
+  height: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.nav-item
+{
+  padding: 5px;
+}
+// sub menu
+
+.sub-meu
+{
+  display: none;
+}
+
+.navbar ul li:hover .sub-meu
+{
+  display: block;
+  position: absolute;
+  background: #fafafa;
+  margin-left: 20px;
+  padding: 5px;
+  border: 1px solid gray;
+}
+
+.navbar ul li:hover .sub-meu:hover
+{
+  display: block;
+  z-index: 9999;
+
+}
+
+.navbar ul li:hover .sub-meu ul
+{
+  padding: 0;
+}
+
+.navbar ul li:hover .sub-meu ul li
+
+{
+  width: 100px;
+  list-style: none;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+
+}
+
+.navbar ul li:hover .sub-meu ul li:last-child
+{
+  padding-bottom: 10px;
+  border-top: 0.5px solid gray;
+}
+
+.navbar ul li:hover .sub-meu ul li a
+{
+  color: black;
+  text-decoration: none;
+}
+
+.navbar ul li:hover .sub-meu ul li a:hover
+{
+  color: gray;
+
+}
+
+
+// login page
+
+.landing-left
+{
+  .dummy-phone
+  {
+    background-image: image-url("dummy-phone-2x.png");
+    background-repeat: no-repeat;
+    background-position: right 0;
+    background-size: 454px 618px;
+    position: relative;
+    height: 618px;
+    margin-top: 100px;
+    margin-left: -35px;
+    margin-right: -15px;
+  }
+
+  .screenshot
+  {
+    position: absolute;
+    top: 99px;
+    right: 63px;
+
+    .item
+    {
+      position: absolute;
+    }
+  }
+}
+
+
+.landing-right
+{
+  .form-login {
+    width: 350px;
+
+    form
+    {
+      padding: 0 40px;
+
+      .btn-primary
+      {
+        width: 100%;
+        line-height: 14px;
+        font-size: 14px;
+        font-weight: 600;
+
+      }
+
+      input
+      {
+        border: 1px solid #efefef;
+      }
+
+      .form-check-label
+      {
+        padding: 0;
+        font-size: 15px;
+        color: #262626;
+      }
+
+      .form-check-input
+      {
+        margin-left: 20px;
+        margin-right: -40px;
+      }
+
+    }
+
+    .logo-2
+    {
+      margin: 22px auto 8px;
+    }
+
+
+  }
+
+  .redirect-links
+  {
+
+    text-decoration: none;
+
+  }
+}
+
+// box for login page
+
+.box {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 1px;
+  padding: 10px 0;
+  margin: 0 0 10px;
+
+}
+
+//footer
+
+.footer-basic {
+  margin-top: auto;
+  padding:40px 0;
+  background-color:#ffffff;
+  color:#4b4c4d;
+}
+
+.footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-basic li {
+  padding:0 10px;
+}
+
+.footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity:1;
+}
+
+
+.footer-basic .copyright {
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+}
+
+
+// signup page
+.outer-box
+{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.inner-box
+{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.signup-form {
+  .box {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    padding: 10px 0;
+    margin: 0 0 10px;
+
+  }
+
+  .form-signup {
+    width: 350px;
+
+    form {
+      padding: 0 40px;
+
+      .btn-primary {
+        width: 100%;
+        line-height: 14px;
+        font-size: 14px;
+        font-weight: 600;
+
+      }
+
+      input {
+        border: 1px solid #efefef;
+      }
+
+      .form-group
+      {
+        padding: 2px;
+      }
+
+    }
+  }
+}
+

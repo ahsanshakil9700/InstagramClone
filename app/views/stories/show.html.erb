@@ -1,0 +1,70 @@
+<body class="story-body">
+<div class="container story-container">
+  <div class="row">
+    <div class="story-column">
+      <div class="story-box">
+        <div class="story-header">
+          <% if @account.avatar? %>
+          <%= image_tag(@account.avatar.url(:avatar), class: "thumbnail-avatar") %>
+            <%else %>
+            <% image_tag"defaultpicture.png", class: "default-avatar" %>
+            <%end %>
+          <%= link_to @account.full_name, account_path(@account.id), class: "btn story-username" %>
+        </div>
+        <% if @stories.count == 1 %>
+          <% if policy(@stories.first).destroy? %>
+            <div class="delete-story">
+              <%= link_to story_path(@stories.first), data: { confirm: "Delete this story?" },
+                          method: :delete, class:"story-btn" do %>
+                <i class="trash-icon fa fa-trash" aria-hidden="true"></i>
+              <% end %>
+            </div>
+          <% end %>
+          <a class="story-time"><%= time_ago_in_words(@stories.first.created_at).upcase + " AGO"%></a>
+          <%= image_tag @stories.first.photos.first.image.url(:story) %>
+        <% else %>
+          <div class="carousel slide" data-ride="carousel" id="carousel-story-<%= @account.id %>">
+            <div class="carousel-inner">
+              <% @stories.each do |story| %>
+                <% if story.account == current_account %>
+                  <div class="delete-story">
+                    <%= link_to story_path(story), data: { confirm: "Delete this story?" },
+                                method: :delete, class:"story-btn" do %>
+                      <i class="fa fa-trash"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+                <% if story.photos == @oldest_story.photos %>
+                  <div class="carousel-item active">
+                <% else %>
+                  <div class="carousel-item">
+                <% end %>
+                <a class="story-time"><%= time_ago_in_words(story.created_at).upcase + " AGO"%></a>
+                <%= image_tag story.photos.first.image.url(:story) %>
+                </div>
+              <% end %>
+              </div>
+
+              <a class="carousel-control-prev" href="#carousel-story-<%= @account.id %>" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carousel-story-<%= @account.id %>" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="story-column">
+      <div class="story-options">
+        <%= link_to root_path, method: :get do %>
+          <i class="fa-solid fa-xmark"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

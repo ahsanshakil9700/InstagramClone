@@ -1,0 +1,29 @@
+
+<div class="add-story-area">
+  <% @stories_attached_user.each do |user| %>
+    <% if current_account.following.include?(user) || user == current_account %>
+        <% if user.avatar? %>
+          <%= link_to image_tag(user.avatar.url(:avatar), class: "story-avatar"), story_path(user.id), class: "btn" %>
+        <%else %>
+          <%= link_to image_tag("defaultpicture.png", class: "story-avatar"), story_path(user.id), class: "btn" %>
+        <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+
+<div class="d-flex flex-column align-items-center mt-3">
+  <div class="col-xl-7 col-lg-8 col-md-10 col-sm-11 post-card">
+    <div class="card">
+      <div class="card-header">
+        Create Stories
+      </div>
+        <div class="card-body">
+          <%= form_for @story, :html => {:multipart => true} do |f| %>
+            <%= file_field_tag "image", type: :file %>
+            <%= f.submit "Submit", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+    </div>
+  </div>
+</div>

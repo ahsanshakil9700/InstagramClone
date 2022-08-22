@@ -1,0 +1,98 @@
+<div class="user-profile">
+  <div class="profile row">
+    <div class="col-md-4 avatar">
+      <div class="wrapper">
+        <% if @account.avatar? %>
+          <%= image_tag @account.avatar.url(:avatar), class: 'avatar' %>
+          <% else %>
+        <%= image_tag "defaultpicture.png" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-8 basic-info">
+      <div class="user-wrapper">
+        <h2 class="username"><%= @account.username %></h2>
+          <% if @account == current_account %>
+            <a class="edit-profile" href=" <%= edit_account_path(current_account) %>" >
+            <button>Edit Profile</button>
+            </a>
+          <% else %>
+            <% if current_account.following.include?(@account) %>
+                <%= button_to 'Unfollow', follow_path(@account), method: :delete, class: "btn btn-primary" %>
+            <% else %>
+              <% if current_account.sending.include?(@account) %>
+                  <%= button_to "Pending Request", request_path(@account), method: :delete, class: "btn btn-primary" %>
+              <% else %>
+                <% if @account.private? %>
+                  <%= form_tag requests_path, method: :post %>
+                  <%= hidden_field_tag :account_id, current_account.id %>
+                  <%= hidden_field_tag :following_id, @account.id %>
+                  <%= submit_tag "Follow", class: "btn btn-primary" %>
+                <% else %>
+                    <%= button_to "Follow", follows_path(@account), method: :post, class: "btn btn-primary" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <%end %>
+      </div>
+      <ul class="posts">
+        <li><span> <%= @posts.count %> </span> posts</li>
+        <li><span> <%= @account.followers.count %> </span> followers</li>
+        <li><span> <%= @account.following.count %></span> following</li>
+      </ul>
+      <h2 class="name"><%= @account.full_name %></h2>
+      <a class="website"><%= @account.website %></a>
+    </div>
+  </div>
+</div>
+<div class="user-tabs">
+  <a class="tab active" href="">
+    <i class="fa fa-th"></i>
+    POSTS
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-tv"></i>
+    IGTV
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-bookmark"></i>
+    SAVED
+  </a>
+  <a class="tab" href="">
+    <i class="fa fa-tag"></i>
+    TAGGED
+  </a>
+</div>
+<% if @account.private? and @account != current_account %>
+  <% if current_account.following.include?(@account) %>
+    <div class="user-images">
+      <% @posts.each do |post|%>
+        <div class="wrapper">
+          <%=image_tag post.photos.first.image.url(:standard) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <% if current_account.sending.include?(@account) %>
+      <div class="private-account-msg text-center">
+        <br>
+        <br>
+        <strong><p> Account is private! </p></strong>
+      </div>
+    <% else %>
+      <div class="private-account-msg text-center">
+        <br>
+        <br>
+        <strong><p> Account is private! </p></strong>
+      </div>
+    <%end %>
+  <% end %>
+<% else %>
+  <div class="user-images">
+    <% @posts.each do |post|%>
+      <div class="wrapper">
+        <%=image_tag post.photos.first.image.url(:standard) %>
+      </div>
+    <% end %>
+  </div>
+<%end  %>

@@ -1,0 +1,7 @@
+<div class="box-center">
+  <% @account.each do |user| %>
+    <div class="row search-result">
+      <%= link_to user.full_name, account_path(user.id), class: "btn post-username" %>
+    </div>
+  <% end %>
+</div>
